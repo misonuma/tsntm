@@ -111,6 +111,7 @@ def prepare_instances(data_df):
         instance.doc_l = doc.doc_l
         instance.max_sent_l = doc.max_sent_l
         instance.bow = doc.bow
+        instance.doc = doc.doc
         instances.append(instance)
     return instances
 
