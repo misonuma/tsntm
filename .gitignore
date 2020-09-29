@@ -1,6 +1,7 @@
 data/bags/*
 corpus/bags/*
 model/bags/*
+!checkpoint_stable
 !item_idxs_split.pkl
 !.gitkeep
 .gitignore

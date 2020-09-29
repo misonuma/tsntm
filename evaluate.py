@@ -54,12 +54,12 @@ def compute_topic_specialization(sess, model, instances, verbose=False):
         depth_topic_idxs[depth].append(topic_idx)
 
     depth_specs = {}
-    print('Topic Specialization:', end=' ')
+    if verbose: print('Topic Specialization:', end=' ')
     for depth, topic_idxs in depth_topic_idxs.items():
         topic_indices = np.array([model.topic_idxs.index(topic_idx) for topic_idx in topic_idxs])
         depth_spec = np.mean(topics_spec[topic_indices])
         depth_specs[depth] = depth_spec
-        print('depth %i = %.2f' % (depth, depth_spec), end=', ')
+        if verbose: print('depth %i = %.2f' % (depth, depth_spec), end=', ')
     print('')
     
     return depth_specs
