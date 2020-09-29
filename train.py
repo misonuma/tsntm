@@ -109,8 +109,8 @@ if __name__ == '__main__':
     parser.add_argument('-static', action='store_true') # if true, the tree structure is static
     
     # path of input data and output model
-    parser.add_argument('-path_data', type=str, 'data/toys/instances_tmp.pkl')
-    parser.add_argument('-dir_model', type=str, 'model/toys/checkpoint_tmp')
+    parser.add_argument('-path_data', type=str, default='data/toys/instances_tmp.pkl')
+    parser.add_argument('-dir_model', type=str, default='model/toys/checkpoint_tmp')
     parser.add_argument('-tmp', action='store_true')
     config = parser.parse_args()
 

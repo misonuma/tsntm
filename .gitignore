@@ -1,6 +1,7 @@
 model/*
 data/bags/*
 corpus/bags/*
+model/bags/*
 !item_idxs_split.pkl
 !.gitkeep
 .gitignore
