@@ -42,7 +42,7 @@ def get_data_df(config):
     return filtered_data_df
 
 def split_data_df(config, data_df):
-    item_idxs_split = cPickle.load(open(config.path_output, 'rb'))
+    item_idxs_split = cPickle.load(open(config.path_split, 'rb'))
     test_df = data_df[data_df['item_idx'].apply(lambda item_idx: item_idx in item_idxs_split['test'])]
     dev_df = data_df[data_df['item_idx'].apply(lambda item_idx: item_idx in item_idxs_split['dev'])]
     train_df = data_df[data_df['item_idx'].apply(lambda item_idx: item_idx in item_idxs_split['train'])]

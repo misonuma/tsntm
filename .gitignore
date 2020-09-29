@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 model/*
 data/bags/*
-=======
-data/*
-model/*
->>>>>>> a99633e7ccafa54ed0e430ac51a1ec828dab8138
 corpus/bags/*
+!item_idxs_split.pkl
 !.gitkeep
 .gitignore
 *.ipynb
