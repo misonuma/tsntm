@@ -42,26 +42,11 @@ def get_data_df(config):
     return filtered_data_df
 
 def split_data_df(config, data_df):
-    def get_test_item_idxs(config):
-        test_item_idxs = []
-        for fname in os.listdir(config.dir_test):
-            test_item_idx = re.search(r'bags_and_cases.([A-Z0-9]+).*.all.txt', fname).group(1)
-            test_item_idxs.append(test_item_idx)
-        test_item_idxs = set(test_item_idxs)
-        return test_item_idxs
-    
-    item_idxs = set(data_df['item_idx'])
-    test_item_idxs = get_test_item_idxs(config)
-    train_dev_item_idxs = list(item_idxs - test_item_idxs)
-    n_dev = int(len(train_dev_item_idxs) * config.r_dev)
-    dev_item_idxs = train_dev_item_idxs[:n_dev]
-    train_item_idxs = train_dev_item_idxs[n_dev:]
-    
-    test_df = data_df[data_df['item_idx'].apply(lambda item_idx: item_idx in test_item_idxs)]
-    dev_df = data_df[data_df['item_idx'].apply(lambda item_idx: item_idx in dev_item_idxs)]
-    train_df = data_df[data_df['item_idx'].apply(lambda item_idx: item_idx in train_item_idxs)]
+    item_idxs_split = cPickle.load(open(config.path_output, 'rb'))
+    test_df = data_df[data_df['item_idx'].apply(lambda item_idx: item_idx in item_idxs_split['test'])]
+    dev_df = data_df[data_df['item_idx'].apply(lambda item_idx: item_idx in item_idxs_split['dev'])]
+    train_df = data_df[data_df['item_idx'].apply(lambda item_idx: item_idx in item_idxs_split['train'])]
 
-    print("Number of documents: train=%i, valid=%i, test=%i" % (len(train_df), len(dev_df), len(test_df)))
     return train_df, dev_df, test_df
 
 def get_word_cnt_dict(train_df, min_tf=None):
@@ -129,13 +114,24 @@ def prepare_instances(data_df):
         instances.append(instance)
     return instances
 
+def write_corpus(instances_train, instances_dev, instances_test):
+    n_doc = 100
+    docs = []
+    for i, instance in enumerate(instances_train + instances_dev + instances_test):
+        docs.append(instance.doc)
+        if (i+1) % n_doc == 0:
+            fname = 'bags.%i' % (i // n_doc)
+            with open(os.path.join(config.dir_corpus, fname), 'w', encoding='utf-8') as f:
+                f.write('\n'.join(docs))
+                docs = []
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-path_data', type=str, default='data/bags/bags.trn')
-    parser.add_argument('-dir_test', type=str, default='data/bags/test')
+    parser.add_argument('-path_data', type=str, default='data/bags/bags_and_cases.trn')
+    parser.add_argument('-path_split', type=str, default='data/bags/item_idxs_split.pkl')
     parser.add_argument('-path_stopwords', type=str, default='data/stopwords_mallet.txt')
     parser.add_argument('-path_output', type=str, default='data/bags/instances_tmp.pkl')
-    parser.add_argument('-r_dev', type=float, default=0.01)
+    parser.add_argument('-dir_corpus', type=str, default='data/bags/corpus')
 
     parser.add_argument('-max_doc_l', type=int, default=10)
     parser.add_argument('-max_sent_l', type=int, default=40)
@@ -166,3 +162,6 @@ if __name__ == '__main__':
     instances_test = prepare_instances(test_df)
     print('saving preprocessed instances to ', config.path_output)
     cPickle.dump((instances_train, instances_dev, instances_test, word_to_idx, idx_to_word, bow_idxs),open(config.path_output, 'wb'))
+    
+    # write corpus for computiing npmi
+    write_corpus(instances_train, instances_dev, instances_test)
