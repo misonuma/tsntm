@@ -32,12 +32,12 @@ def get_parser():
     parser.add_argument('-tree', type=int, default=33)
     parser.add_argument('-dep', '--n_depth', type=int, default=3)
     parser.add_argument('-temp', '--depth_temperature', type=float, default=10.)
-    
+
     # hyperparameters regarding the update of tree structure
     parser.add_argument('-add', '--add_threshold', type=float, default=0.05)
     parser.add_argument('-rem', '--remove_threshold', type=float, default=0.05)
     parser.add_argument('-cell', type=str, default='rnn')
     parser.add_argument('-static', action='store_true') # if true, the tree structure is static
-    
+
     parser.add_argument('-tmp', action='store_true')
     return parser

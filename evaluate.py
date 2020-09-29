@@ -92,7 +92,7 @@ if __name__ == '__main__':
     parser.add_argument('-gpu', type=str, default='0')
     parser.add_argument('-path_data', type=str, default='data/bags/instances_stable.pkl')
     parser.add_argument('-path_model', type=str, default='model/bags/checkpoint_stable/model-385000')
-    parser.add_argument('-dir_corpus', type=str, default='data/bags/corpus/')
+    parser.add_argument('-dir_corpus', type=str, default='corpus/bags')
     parser.add_argument('-batch_size', type=int, default=64)
     
     option = parser.parse_args()

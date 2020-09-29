@@ -131,7 +131,7 @@ if __name__ == '__main__':
     parser.add_argument('-path_split', type=str, default='data/bags/item_idxs_split.pkl')
     parser.add_argument('-path_stopwords', type=str, default='data/stopwords_mallet.txt')
     parser.add_argument('-path_output', type=str, default='data/bags/instances_tmp.pkl')
-    parser.add_argument('-dir_corpus', type=str, default='data/bags/corpus')
+    parser.add_argument('-dir_corpus', type=str, default='corpus/bags')
 
     parser.add_argument('-max_doc_l', type=int, default=10)
     parser.add_argument('-max_sent_l', type=int, default=40)
