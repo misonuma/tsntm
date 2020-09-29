@@ -1,6 +1,6 @@
-data/*
-!data/bags/corpus
 model/*
+data/bags/*
+corpus/bags/*
 !.gitkeep
 .gitignore
 *.ipynb
