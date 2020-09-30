@@ -6,6 +6,16 @@ https://www.aclweb.org/anthology/2020.acl-main.73/
 
 Masaru Isonuma, Juncihiro Mori, Danushka Bollegala, and Ichiro Sakata (The University of Tokyo, University of Liverpool)  
 
+### Environment
+
+Python==3.6  
+
+Run the following script to install required packages.
+```
+pip install -r requirements.txt
+
+```
+
 ### Preprocessing
 
 #### Amazon data (bags and cases)
