@@ -76,8 +76,6 @@ if __name__ == '__main__':
     # load config
     parser = argparse.ArgumentParser()
     parser.add_argument('-gpu', type=str, default='0')
-    parser.add_argument('-data', type=str, default='bags')
-    parser.add_argument('-model', type=str, default='hntm')
 
     parser.add_argument('-seed', type=int, default=1234)
     parser.add_argument('-log', '--log_period', type=int, default=5000)
@@ -109,7 +107,7 @@ if __name__ == '__main__':
     parser.add_argument('-static', action='store_true') # if true, the tree structure is static
     
     # path of input data and output model
-    parser.add_argument('-path_data', type=str, default='data/bags/instances_tmp.pkl')
+    parser.add_argument('-path_data', type=str, default='data/bags/instances.pkl')
     parser.add_argument('-dir_model', type=str, default='model/bags/checkpoint_tmp')
     parser.add_argument('-tmp', action='store_true')
     config = parser.parse_args()
