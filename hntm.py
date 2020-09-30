@@ -84,10 +84,10 @@ class HierarchicalNeuralTopicModel():
             latents_bow = sample_latents(means_bow, logvars_bow) # sample latent vectors
             prob_layer = lambda h: tf.nn.sigmoid(tf.matmul(latents_bow, h, transpose_b=True))
 
-            tree_sticks_topic, tree_states_sticks_topic = doubly_rnn(self.config.dim_latent_bow, self.tree_idxs, output_layer=prob_layer, cell=self.config.cell, name='sticks_topic')
+            tree_sticks_topic, tree_states_sticks_topic = doubly_rnn(self.config.dim_latent_bow, self.tree_idxs, output_layer=prob_layer, name='sticks_topic')
             self.tree_prob_leaf = tsbp(tree_sticks_topic, self.tree_idxs)
             
-            sticks_depth, _ = rnn(self.config.dim_latent_bow, self.n_depth, output_layer=prob_layer, cell=self.config.cell, name='prob_depth')
+            sticks_depth, _ = rnn(self.config.dim_latent_bow, self.n_depth, output_layer=prob_layer, name='prob_depth')
             self.prob_depth = sbp(sticks_depth, self.n_depth)
 
             self.prob_topic = get_prob_topic(self.tree_prob_leaf, self.prob_depth)# n_batch x n_topic
@@ -98,7 +98,7 @@ class HierarchicalNeuralTopicModel():
 
         with tf.variable_scope('topic/dec', reuse=False):
             emb_layer = lambda h: tf.layers.Dense(units=self.config.dim_emb, name='output')(tf.nn.tanh(h))
-            self.tree_topic_embeddings, tree_states_topic_embeddings = doubly_rnn(self.config.dim_emb, self.tree_idxs, output_layer=emb_layer, cell=self.config.cell, name='emb_topic')
+            self.tree_topic_embeddings, tree_states_topic_embeddings = doubly_rnn(self.config.dim_emb, self.tree_idxs, output_layer=emb_layer, name='emb_topic')
 
             self.tree_topic_bow = get_tree_topic_bow(self.tree_topic_embeddings) # bow vectors for each topic
 

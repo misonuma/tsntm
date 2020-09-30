@@ -97,6 +97,11 @@ if __name__ == '__main__':
     
     option = parser.parse_args()
     option.path_config = option.path_model + '.config'
+    if os.path.split(option.dir_corpus)[-1] == '20news':
+        option.window_size = 0
+    else:
+        option.window_size = 20
+    
     os.environ["CUDA_VISIBLE_DEVICES"] = option.gpu
 
     # load data
@@ -113,7 +118,7 @@ if __name__ == '__main__':
         saver.restore(sess, option.path_model)
 
         freq_tokens = compute_freq_tokens(sess, model, bow_idxs, idx_to_word, verbose=True)
-        compute_coherence(freq_tokens.values(), option.dir_corpus, topns=[5, 10], verbose=True)
+        compute_coherence(freq_tokens.values(), option.dir_corpus, topns=[5, 10], window_size=option.window_size, verbose=True)
         compute_perplexity(sess, model, test_batches, verbose=True)
         compute_topic_specialization(sess, model, test_instances, verbose=True)
         compute_hierarchical_affinity(sess, model, verbose=True)

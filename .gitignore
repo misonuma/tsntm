@@ -1,6 +1,9 @@
 data/bags/*
+data/20news/*
 corpus/bags/*
+corpus/20news/*
 model/bags/*
+model/20news/*
 !checkpoint_stable
 !item_idxs_split.pkl
 !.gitkeep
