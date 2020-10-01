@@ -38,7 +38,7 @@ https://github.com/akashgit/autoencoding_vi_for_topic_models/tree/master/data/20
 
 Run the following script:
 ```
-python preprocess_20news.py -path_data </path/to/raw/data> -path_output </path/to/preprocessed/data>
+python preprocess_20news.py -dir_data </dir/of/raw/data> -path_output </path/to/preprocessed/data>
 ```
 
 ### Training
@@ -46,7 +46,7 @@ python preprocess_20news.py -path_data </path/to/raw/data> -path_output </path/t
 Run the following script:
 
 ```
-python train.py -gpu <index/of/gpu> -data <bags/or/20news> -path_data </path/to/preprocessed/data> -dir_model <path/to/model/directory> -dir_corpus <path/to/corpus>
+python train.py -gpu <index/of/gpu> -path_data </path/to/preprocessed/data> -dir_model <path/to/model/directory>
 ```
 
 The trained parameters are saved in `dir_model`.  
@@ -57,7 +57,7 @@ The corpus in `dir_corpus` are used for calculating coherence score (NPMI).
 Run the following script:
 
 ```
-python evaluate.py -gpu <index/of/gpu> -data <bags/or/20news> -path_model <path/to/model/checkpoint>
+python evaluate.py -gpu <index/of/gpu> -path_model <path/to/model/checkpoint> -dir_corpus <path/to/corpus>
 ```
 
 The scores and topic frequent words are displayed in the console.  
